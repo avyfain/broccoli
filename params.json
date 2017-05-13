@@ -1,0 +1,34 @@
+{
+  "availabilityMode": [
+    "0"
+  ], 
+  "hasPic": [
+    "1"
+  ], 
+  "laundry": [
+    "1", 
+    "2", 
+    "3"
+  ], 
+  "max_bedrooms": [
+    "2"
+  ], 
+  "max_price": [
+    "4000"
+  ], 
+  "min_bathrooms": [
+    "1"
+  ], 
+  "min_bedrooms": [
+    "1"
+  ], 
+  "postal": [
+    "94110"
+  ],
+  "bundleDuplicates": [
+    "1"
+  ],
+  "is_furnished": [
+    "0"
+  ]
+}

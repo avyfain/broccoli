@@ -1,4 +1,5 @@
 import os
+import json
 import smtplib
 import string
 from email.mime.multipart import MIMEMultipart
@@ -17,15 +18,10 @@ MAX_PID = r.get('last') or -1
 BASE_URL = 'http://sfbay.craigslist.org'
 PATH = '/search/apa'
 URL = BASE_URL + PATH
-PARAMS = {'min_bedrooms': ['1'],
-          'hasPic': ['1'],
-          'min_bathrooms': ['1'],
-          'laundry': ['1', '2', '3'],
-          'max_bedrooms': ['2'],
-          'availabilityMode': ['0'],
-          'postal': ['94110'],
-          'max_price': ['3500']
-          }
+with open('params.json') as f:
+    PARAMS = json.loads(f.read())
+
+PARAMS.update(os.environ.get('PARAMS', {}))
 
 # Remove weird characters
 USE_CHARS = string.ascii_letters + ''.join(str(i) for i in range(10)) + ' -$'
@@ -50,7 +46,7 @@ def scrape_craigslist():
         name = ''.join(i for i in title.text if i in USE_CHARS)
         path = title.attrs['href']
         pid = apt.get('data-pid')
-        if pid > MAX_PID:
+        if pid > MAX_PID and apt.get('data-repost-of') is None:
             cur_max_pid = max(cur_max_pid, pid)
             yield name, path
     try:
