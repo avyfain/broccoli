@@ -21,7 +21,8 @@ URL = BASE_URL + PATH
 with open('params.json') as f:
     PARAMS = json.loads(f.read())
 
-PARAMS.update(os.environ.get('PARAMS', {}))
+env_params = json.loads(os.environ.get('PARAMS', "{}"))
+PARAMS.update(env_params)
 
 # Remove weird characters
 USE_CHARS = string.ascii_letters + ''.join(str(i) for i in range(10)) + ' -$'
